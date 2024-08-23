@@ -25,6 +25,9 @@ login_search_data = json.load(login_search_file)
 request_friend_file = open("request_friend.json")
 request_friend_data = json.load(request_friend_file)
 
+daily_claim_file = open("daily_claim.json")
+daily_claim_data = json.load(daily_claim_file)
+
 miss_out_file = open("miss_out.json")
 miss_out_data = json.load(miss_out_file)
 
@@ -121,6 +124,7 @@ def character_updating(event_id, udid, place):
     new_character_update["event_id"] = event_id
     new_character_update["place"] = place
     response_character_update = requests.post(url + "monster_character_update", json=new_character_update, headers=headers)
+    response_character_update.json()
     if (response_character_update.json()["status_code"] != 0):
         return None
     return True
@@ -146,13 +150,23 @@ def request_friend(udid, user_id):
     return True
 
 
-def decr_energy(udid):
+def decr_energy(udid, count=5):
     new_decr_energy = copy.copy(decr_energy_data)
     new_decr_energy["udid"] = udid
+    new_decr_energy["amount"] = count
     response_decr_energy = requests.post(url + "monster_decr_energy", json=new_decr_energy, headers=headers)
     if (response_decr_energy.json()["status_code"] != 0):
         return None
     return response_decr_energy.json()["battle_id"]
+
+
+def daily_claim(udid):
+    new_daily_claim = copy.copy(daily_claim_data)
+    new_daily_claim["udid"] = udid
+    response_daily_claim = requests.post(url + "monster_daily_claim", json = new_daily_claim, headers=headers)
+    if (response_daily_claim.json()["status_code"] != 0):
+        return None
+    return response_daily_claim.json()["monster_energy"]["level"]
 
 
 def gacha_info(udid):
