@@ -124,7 +124,6 @@ def character_updating(event_id, udid, place):
     new_character_update["event_id"] = event_id
     new_character_update["place"] = place
     response_character_update = requests.post(url + "monster_character_update", json=new_character_update, headers=headers)
-    response_character_update.json()
     if (response_character_update.json()["status_code"] != 0):
         return None
     return True
