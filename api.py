@@ -49,7 +49,7 @@ init_data = json.load(init)
 register_push = open("register_push.json")
 register_push_data = json.load(register_push)
 
-url = "https://battlecamp.com/api/"
+url = "http://battlecamp.com/api/"
 headers = {'User-Agent': 'Monsters/a.5.32.1'}
 
 

@@ -1,11 +1,12 @@
 import json
-
+import time
 import api
 from threading import Thread
 import string
 import random
 
-epic_ids = ["480ctdmgepic", "370cwdmgfireepic", "460tbattdmgepic", "470ffadominionfireepic", "efiredragon", "370cwdmgleafepic", "470ffadominionleafepic", "480wbdmgepic", "eleafdragon", "370cwdmgwaterepic", "470ffadominionwaterepic", "ewaterdragon", "370cwdmgrockepic", "370wbdmgepic", "470ffadominionrockepic", "erockdragon", "370cwdmgwindepic", "410wbdmgepic", "480cttokenepic", "attackdragon", "ewinddragon", "470ffadominionwindepic"]
+epic_ids = open("epic_ids", "r").read().split("\n")
+print(epic_ids)
 
 
 def get_random_name():
@@ -67,6 +68,12 @@ while (True):
             data[udid] = monster_id
             json.dump(data, accounts, indent=4)
             accounts.close()
-            print("ЕБАТЬ ТЫ НАХУЙ ЧТО ВЫБИЛ ФЫВФОЫВФЫЛВАЛДФЦСЫДИ КОАЫЦУДДВАЫКУИРОАДЫУ")
+            accounts_farm = open("accounts.json")
+            accounts_farm_data = json.load(accounts_farm)
+            accounts_farm.close()
+            accounts_farm_data[udid] = [time.time() - 3600, time.time() - 86400]
+            accounts_farm = open("accounts.json", "w")
+            json.dump(accounts_farm_data, accounts_farm, indent=4)
+            accounts_farm.close()
     except:
         print("ERROR??")
