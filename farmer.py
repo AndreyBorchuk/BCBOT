@@ -1,6 +1,7 @@
 import time
 import json
 import api
+import info_bot
 
 
 accounts = open("accounts.json")
@@ -29,8 +30,10 @@ while True:
                         print("Error while decr energy")
                         count = 0
                         continue
-                    print(api.battle_won(i, battle_id), end=" ")
-                    data[i] = [time.time(), data[i][1]]
+                    level = api.battle_won(i, battle_id)
+                    if (data[i][2] < level):
+                        info_bot.send_notify_level_up(i, level, top_drop_data[i])
+                    data[i] = [time.time(), data[i][1], level]
                     count = api.daily_claim(i)
                     accounts = open("accounts.json", "w")
                     json.dump(data, accounts, indent=4)
@@ -40,17 +43,19 @@ while True:
                     if (status is None):
                         print("Error while character update")
                         continue
-                    data[i] = [time.time(), time.time()]
                     battle_id = api.decr_energy(i, 10)
                     if (battle_id is None):
                         print("Error while decr energy")
                         continue
                     print(10, end=" ")
-                    print(api.battle_won(i, battle_id), end=" ")
+                    level = api.battle_won(i, battle_id)
+                    if (data[i][2] < level):
+                        info_bot.send_notify_level_up(i, level, top_drop_data[i])
+                    data[i] = [time.time(), time.time(), level]
                     accounts = open("accounts.json", "w")
                     json.dump(data, accounts, indent=4)
                     accounts.close()
-            print()
+                print()
         except:
             print("ERROR??")
     time.sleep(100)
@@ -58,5 +63,5 @@ while True:
     data = json.load(accounts)
     accounts.close()
     top_drop_accounts = open("top_drop_accounts.json")
-    top_drop_data = json.load(accounts)
+    top_drop_data = json.load(top_drop_accounts)
     top_drop_accounts.close()

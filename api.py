@@ -189,4 +189,4 @@ def battle_won(udid, battle_id):
     response_battle_won = requests.post(url + "monster_battle_won", json=new_battle_won, headers=headers)
     if (response_battle_won.json()["status_code"] != 0):
         return None
-    return True
+    return response_battle_won.json()["xp"]["level"]

@@ -5,6 +5,8 @@ from threading import Thread
 import string
 import random
 
+import info_bot
+
 epic_ids = open("epic_ids", "r").read().split("\n")
 print(epic_ids)
 
@@ -61,6 +63,7 @@ while (True):
             continue
         print(monster_id)
         if (monster_id in epic_ids):
+            info_bot.send_notify_new_account(udid, monster_id)
             accounts = open("top_drop_accounts.json")
             data = json.load(accounts)
             accounts.close()
@@ -71,7 +74,7 @@ while (True):
             accounts_farm = open("accounts.json")
             accounts_farm_data = json.load(accounts_farm)
             accounts_farm.close()
-            accounts_farm_data[udid] = [time.time() - 3600, time.time() - 86400]
+            accounts_farm_data[udid] = [time.time() - 3600, time.time() - 86400, 0]
             accounts_farm = open("accounts.json", "w")
             json.dump(accounts_farm_data, accounts_farm, indent=4)
             accounts_farm.close()

@@ -16,7 +16,7 @@ farm_data = accounts_farm_data
 for i in accounts_data.keys():
     if (i in farm_data):
         continue
-    farm_data[i] = [time.time() - 3600, time.time() - 86400]
+    farm_data[i] = [time.time() - 3600, time.time() - 86400, 0]
 
 
 json.dump(farm_data, accounts_for_farm, indent=4)
