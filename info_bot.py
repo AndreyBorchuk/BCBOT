@@ -16,6 +16,3 @@ def send_notify_level_up(udid, level, monster_id):
 
 def send_notify_new_account(udid, monster_id):
     bot.send_message(695078526, text=f"new account {udid} ({monster_id})")
-
-
-bot.polling(none_stop=True)

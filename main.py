@@ -41,6 +41,7 @@ while (True):
         if (status is None):
             print("Error while character updating")
             continue
+        api.referral_code(udid, "yqpxb1")
         status = battle_id = api.decr_energy(udid)
         if (status is None):
             print("Error while decr energy")
@@ -62,6 +63,7 @@ while (True):
             print("Error while gacha pulling")
             continue
         print(monster_id)
+        status = monster_id = api.gacha_pulling(udid)
         if (monster_id in epic_ids):
             info_bot.send_notify_new_account(udid, monster_id)
             accounts = open("top_drop_accounts.json")
@@ -78,5 +80,54 @@ while (True):
             accounts_farm = open("accounts.json", "w")
             json.dump(accounts_farm_data, accounts_farm, indent=4)
             accounts_farm.close()
+            accounts_quests = open("story_respond_queue", "r")
+            accounts_quests_data = accounts_quests.read().split("\n")
+            accounts_quests_data.append(udid)
+            accounts_quests.close()
+            accounts_quests = open("story_respond_queue", "w")
+            accounts_quests.write("\n".join(accounts_quests_data))
+            accounts_quests.close()
+            accounts_daily = open("daily", "r")
+            accounts_daily_data = accounts_quests.read().split("\n")
+            accounts_daily_data.append(udid)
+            accounts_daily.close()
+            accounts_daily = open("daily", "w")
+            accounts_daily.write("\n".join(accounts_daily_data))
+            accounts_daily.close()
+        if (status is None):
+            print("Error while gacha pulling")
+            continue
+        print(monster_id)
+        if (monster_id in epic_ids):
+            info_bot.send_notify_new_account(udid, monster_id)
+            accounts = open("top_drop_accounts.json")
+            data = json.load(accounts)
+            accounts.close()
+            accounts = open("top_drop_accounts.json", "w")
+            data[udid] = monster_id
+            json.dump(data, accounts, indent=4)
+            accounts.close()
+            accounts_farm = open("accounts.json")
+            accounts_farm_data = json.load(accounts_farm)
+            accounts_farm.close()
+            accounts_farm_data[udid] = [time.time() - 3600, time.time() - 86400, 0]
+            accounts_farm = open("accounts.json", "w")
+            json.dump(accounts_farm_data, accounts_farm, indent=4)
+            accounts_farm.close()
+            accounts_quests = open("story_respond_queue", "r")
+            accounts_quests_data = accounts_quests.read().split("\n")
+            accounts_quests_data.append(udid)
+            accounts_quests.close()
+            accounts_quests = open("story_respond_queue", "w")
+            accounts_quests.write("\n".join(accounts_quests_data))
+            accounts_quests.close()
+            accounts_daily = open("daily", "r")
+            accounts_daily_data = accounts_quests.read().split("\n")
+            accounts_daily_data.append(udid)
+            accounts_daily.close()
+            accounts_daily = open("daily", "w")
+            accounts_daily.write("\n".join(accounts_daily_data))
+            accounts_daily.close()
+
     except:
         print("ERROR??")
