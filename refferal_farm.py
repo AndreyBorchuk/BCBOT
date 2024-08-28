@@ -37,7 +37,7 @@ while (True):
         if (status is None):
             print("Error while request room")
             continue
-        api.referral_code(udid, "yqpxb1")
+        api.referral_code(udid, "p5licd")
 
     except:
         print("ERROR??")

@@ -22,8 +22,6 @@ for i in accounts_data.keys():
     if (i in farm_data):
         continue
     farm_data[i] = [time.time() - 3600, time.time() - 86400, 0]
-    if (i in daily_data):
-        continue
     daily_data += f"\n{i}"
 
 

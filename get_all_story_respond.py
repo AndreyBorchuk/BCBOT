@@ -25,7 +25,7 @@ while True:
             #     continue
             # api.acti
             if (udid == ""):
-                break
+                continue
             for id in story_ids:
                 level = 0
                 while (level == 0):

@@ -36,6 +36,11 @@ gacha_info_file = open("gacha_info.json")
 gacha_info_data = json.load(gacha_info_file)
 gacha_info_file.close()
 
+crews_donate_file = open("crews_donate_stones.json")
+crews_donate_data = json.load(crews_donate_file)
+crews_donate_file.close()
+
+
 login_search_file = open("login_search.json")
 login_search_data = json.load(login_search_file)
 login_search_file.close()
@@ -72,9 +77,17 @@ settings = open("settings.json")
 settings_data = json.load(settings)
 settings.close()
 
+sell_file = open("sell.json")
+sell_data = json.load(sell_file)
+sell_file.close()
+
 init = open("init.json")
 init_data = json.load(init)
 init.close()
+
+rename_file = open("rename.json")
+rename_data = json.load(rename_file)
+rename_file.close()
 
 register_push = open("register_push.json")
 register_push_data = json.load(register_push)
@@ -253,3 +266,26 @@ def referral_code(udid, code):
     new_referral_code["udid"] = udid
     new_referral_code["code"] = code
     response_inventory = requests.post(url + "monster_referral_code", json=new_referral_code, headers=headers)
+
+
+def monster_sell(udid, targets):
+    new_sell = copy.copy(sell_data)
+    new_sell["udid"] = udid
+    new_sell["targets"] = targets
+    response_sell = requests.post(url + "monster_sell", json=new_sell, headers=headers)
+
+
+def rename(udid, name, target):
+    new_rename = copy.copy(rename_data)
+    new_rename["udid"] = udid
+    new_rename["target"] = target
+    new_rename["name"] = name
+    response_sell = requests.post(url + "monster_rename", json=new_rename, headers=headers)
+
+
+def crews_donate_stones(udid, amount):
+    new_crews_donate = copy.copy(crews_donate_data)
+    new_crews_donate["udid"] = udid
+    new_crews_donate["amount"] = amount
+    response_sell = requests.post(url + "crews_donate_stones", json=new_crews_donate, headers=headers)
+

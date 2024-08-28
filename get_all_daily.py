@@ -16,7 +16,7 @@ while True:
         account_ids_file.close()
         for udid in account_ids:
             if (udid == ""):
-                break
+                continue
             for id in daily_ids:
                 level = 0
                 while (level == 0):
