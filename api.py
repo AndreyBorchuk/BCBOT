@@ -8,6 +8,10 @@ account = open("account.json")
 create_account_data = json.load(account)
 account.close()
 
+friends_file = open("check.json")
+friends_data = json.load(friends_file)
+friends_file.close()
+
 referral_code_file = open("referral_code.json")
 referral_code_data = json.load(referral_code_file)
 referral_code_file.close()
@@ -202,6 +206,14 @@ def decr_energy(udid, count=5):
         return None
     return response_decr_energy.json()["battle_id"]
 
+
+def friends(udid):
+    new_friends = copy.copy(friends_data)
+    new_friends["udid"] = udid
+    response_friends = requests.post(url + "friends", json=new_friends, headers=headers)
+    if (response_friends.json()["status_code"] != 0):
+        return "ERROR"
+    return udid
 
 def story_respond(udid, id):
     new_story_respond = copy.copy(story_respond_data)

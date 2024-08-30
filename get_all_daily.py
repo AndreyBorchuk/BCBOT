@@ -20,7 +20,10 @@ while True:
             for id in daily_ids:
                 level = 0
                 while (level == 0):
-                    level = api.story_respond(udid, id)
+                    try:
+                        level = api.story_respond(udid, id)
+                    except:
+                        pass
             info_bot.send_notify_level_up(udid, level, "???")
     except:
         print("ERROR???")
