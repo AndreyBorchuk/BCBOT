@@ -1,7 +1,7 @@
 import telebot
 
 
-token = ""
+token = "7398726008:AAGD8gMSDaDnHgKrwmcUXfH51zrYFG_2OgI"
 bot = telebot.TeleBot(token)
 
 
@@ -23,5 +23,3 @@ def send_notify_new_account(udid, monster_id):
 def send_notify_udid_found(udid):
     bot.send_message(chat_id, text=f"UDID found {udid}")
 
-
-#bot.polling(non_stop=True)

@@ -21,7 +21,6 @@ def get_random_name():
 n = 1
 
 def farm():
-
     while (True):
         try:
             udid = api.create_bot(get_random_name())

@@ -61,6 +61,10 @@ daily_claim_file = open("daily_claim.json")
 daily_claim_data = json.load(daily_claim_file)
 daily_claim_file.close()
 
+purchase_gold_file = open("purchase_gold.json")
+purchase_gold_data = json.load(purchase_gold_file)
+purchase_gold_file.close()
+
 miss_out_file = open("miss_out.json")
 miss_out_data = json.load(miss_out_file)
 miss_out_file.close()
@@ -97,8 +101,20 @@ register_push = open("register_push.json")
 register_push_data = json.load(register_push)
 register_push.close()
 
+gifts_send_file = open("gifts_send.json")
+gifts_send_data = json.load(gifts_send_file)
+gifts_send_file.close()
+
+
 url = "http://battlecamp.com/api/"
 headers = {'User-Agent': 'Monsters/a.5.32.1'}
+
+
+def get_random_name():
+    name = ""
+    letters = string.ascii_letters
+    name += "".join(random.choice(letters) for i in range(14))
+    return name
 
 
 def get_token():
@@ -137,6 +153,16 @@ def finished_tutorial_do(udid):
     return True
 
 
+def gifts_send(udid, fb_ids):
+    new_gifts_send_data = gifts_send_data
+    new_gifts_send_data["udid"] = udid
+    new_gifts_send_data["fb_ids"] = fb_ids
+    response_gifts_send = requests.post(url + "monster_gifts_send", json=new_gifts_send_data, headers=headers)
+    if (response_gifts_send.json()["status_code"] != 0):
+        return None
+    return True
+
+
 def request_room(udid, place, place_codename):
     new_request_room_data = request_room_data
     new_request_room_data["udid"] = udid
@@ -145,12 +171,13 @@ def request_room(udid, place, place_codename):
     response_request_room = requests.post(url + "request_room", json=new_request_room_data, headers=headers)
     if (response_request_room.json()["status_code"] != 0):
         return None
-    return True
+    return response_request_room.json()
 
 
-def gacha_pulling(udid):
+def gacha_pulling(udid, type="rare"):
     new_gacha_pull_data = gacha_pull_data
     new_gacha_pull_data["udid"] = udid
+    new_gacha_pull_data["type"] = type
     response_gacha_pull = requests.post(url + "monster_gacha2_pull", json=new_gacha_pull_data, headers=headers)
     if (response_gacha_pull.json()["status_code"] != 0):
         return None
@@ -219,7 +246,7 @@ def story_respond(udid, id):
     new_story_respond = copy.copy(story_respond_data)
     new_story_respond["udid"] = udid
     new_story_respond["id"] = id
-    response_story_respond= requests.post(url + "monster_story_respond", json = new_story_respond, headers=headers)
+    response_story_respond= requests.post(url + "monster_story_respond", json=new_story_respond, headers=headers)
     if (response_story_respond.json()["status_code"] != 0):
         return 0
     print(id)
@@ -229,10 +256,22 @@ def story_respond(udid, id):
 def daily_claim(udid):
     new_daily_claim = copy.copy(daily_claim_data)
     new_daily_claim["udid"] = udid
-    response_daily_claim = requests.post(url + "monster_daily_claim", json = new_daily_claim, headers=headers)
+    response_daily_claim = requests.post(url + "monster_daily_claim", json=new_daily_claim, headers=headers)
     if (response_daily_claim.json()["status_code"] != 0):
         return None
     return response_daily_claim.json()["monster_energy"]["level"]
+
+
+def purchase_gold(udid, signature, signed_data, sale_id):
+    new_purchase_gold = copy.copy(purchase_gold_data)
+    new_purchase_gold["udid"] = udid
+    new_purchase_gold["signature"] = signature
+    new_purchase_gold["signed_data"] = signed_data
+    new_purchase_gold["sale_id"] = sale_id
+    purchase_gold_respond = requests.post(url + "purchase_gold", json=new_purchase_gold, headers=headers)
+    if (purchase_gold_respond.json()["status_code"] != 0):
+        return None
+    return True
 
 
 def gacha_info(udid):
@@ -241,7 +280,7 @@ def gacha_info(udid):
     response_gacha_info = requests.post(url + "monster_gacha2_info", json=new_gacha_info, headers=headers)
     if (response_gacha_info.json()["status_code"] != 0):
         return None
-    return True
+    return response_gacha_info.json()
 
 
 def miss_out():

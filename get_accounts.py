@@ -17,7 +17,8 @@ def create_account():
         if (udid is None):
             time.sleep(0.5)
             continue
-        api.request_room(udid, "playcamp", "playcamp")
+        api.request_room(udid, "playcamp", "playcamp"
+                                           "")
         print(udid)
 
 

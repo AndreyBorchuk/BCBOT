@@ -1,12 +1,12 @@
+import random
+
 import api
 
 accs = open("accs", "r").read().split()
+n = 0
 
-j = 0
-
-for i in range(0, 1000):
-    udid = accs[j]
-    id = f"daily_{i + 1}:complete"
-    status = api.story_respond(udid, id)
-    if (status == 0):
-        j += 1
+for i in range(10, 100):
+    for j in range(1, 10):
+        if (api.story_respond(accs[n], f"{i}_{j}:complete") != 0):
+            print(i, j)
+        n += 1
