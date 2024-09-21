@@ -40,7 +40,7 @@ def farm():
             if (status is None):
                 print("Error while character updating")
                 continue
-            api.referral_code(udid, "yqpxb1")
+            api.referral_code(udid, "dk7isl")
             status = battle_id = api.decr_energy(udid)
             if (status is None):
                 print("Error while decr energy")

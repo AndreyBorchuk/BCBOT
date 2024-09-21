@@ -17,11 +17,15 @@ for udid in accounts_udid:
     while (info is None):
         info = api.gacha_info(udid)
     gold = info["wallet"]["gold"]
-    count_pulls = info["gacha_info"][2]["free_spin"]
+    count_pulls = info["gacha_info"][3]["free_spin"]
     for i in range(count_pulls):
         id = api.gacha_pulling(udid)
         if (id in epic_ids):
             print(udid)
-    # if (gold >= 50):
-    #     print(api.gacha_pulling(udid, "event"))
+            print(id)
+    if (gold >= 50):
+        id = api.gacha_pulling(udid, "event")
+        if (id in epic_ids):
+            print(id)
+            print(udid)
     number += 1

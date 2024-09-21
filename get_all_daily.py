@@ -8,12 +8,17 @@ daily_ids_file = open("daily_ids", "r")
 daily_ids = daily_ids_file.read().split("\n")
 daily_ids_file.close()
 
+top_drop_accounts = open("top_drop_accounts.json")
+top_drop_data = json.load(top_drop_accounts)
+top_drop_accounts.close()
+
 start_time = 0
 while True:
     if (time.time() - start_time < 86400):
         time.sleep(10)
         continue
     try:
+        start_time = time.time()
         except_accounts = []
         account_ids_file = open("daily", "r")
         account_ids = account_ids_file.read().split("\n")
@@ -30,7 +35,7 @@ while True:
                         pass
             if (level >= 50):
                 except_accounts.append(udid)
-            # info_bot.send_notify_level_up(udid, level, "???")
+            info_bot.send_notify_level_up(udid, level, top_drop_data[udid])
         account_ids_file = open("daily", "r")
         account_ids = account_ids_file.read().split("\n")
         account_ids_file.close()
@@ -56,6 +61,9 @@ while True:
             ready_accounts_file.write("\n".join(ready_accounts_data) + "\n" + "\n".join(except_accounts))
             ready_accounts_file.close()
     except Exception as exc:
+        start_time = 0
         print(exc)
         print("ERROR???")
-    start_time = time.time()
+    top_drop_accounts = open("top_drop_accounts.json")
+    top_drop_data = json.load(top_drop_accounts)
+    top_drop_accounts.close()
